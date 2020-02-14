@@ -1,0 +1,32 @@
+name: main
+
+on:
+  push:
+  schedule:
+    - cron: "* */6 * * *"
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - id: node-version
+        run: echo "::set-output name=version::$(cat .node-version)"
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ steps.node-version.version }}
+      - id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - run: yarn --frozen-lockfile
+      - run: node index.js
+        env:
+          GITHUB_GIST_TOKEN: ${{ secrets.GITHUB_GIST_TOKEN  }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+          DISPLAY_CURRENCY: ${{ secrets.DISPLAY_CURRENCY }}
+          DISPLAY_LOCALE: ${{ secrets.DISPLAY_LOCALE }}
