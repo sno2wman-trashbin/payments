@@ -3,10 +3,15 @@ const csv = require("csv-parse");
 const { promisify } = require("util");
 const axios = require("axios");
 
-const { GITHUB_TOKEN, GIST_ID, DISPLAY_CURRENCY, DISPLAY_LOCALE } = process.env;
+const {
+  GITHUB_GIST_TOKEN,
+  GIST_ID,
+  DISPLAY_CURRENCY,
+  DISPLAY_LOCALE
+} = process.env;
 
 const octokit = new Octokit({
-  auth: `token ${GITHUB_TOKEN}`
+  auth: `token ${GITHUB_GIST_TOKEN}`
 });
 
 function toMonth(duration) {
