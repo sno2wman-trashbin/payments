@@ -1,0 +1,12 @@
+{
+  "name": "payments",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "SnO2WMaN <sno2wman.official@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^16.43.1",
+    "axios": "^0.19.2",
+    "csv-parse": "^4.8.5"
+  }
+}
